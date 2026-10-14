@@ -91,94 +91,56 @@ const fuentes = [
     <meta name="description" content="Modelo pedagógico creado por el Dr. Ronald Paucar Curasma en la Universidad Nacional Autónoma de Tayacaja." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Rubik:wght@500;700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Public+Sans:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   </head>
   <body>
+    <div class="weave" aria-hidden="true"></div>
     <header class="wrap top">
-      <a class="logo" href="#">IBPT<span>-STEM</span></a>
+      <a class="logo" href="#">IBPT-STEM</a>
       <nav>
+        <a href="#modelo">Modelo</a>
         <a href="#fases">Fases</a>
         <a href="#proyectos">Proyectos</a>
-        <a href="#docentes">Docentes</a>
-        <a href="#fuentes">Fuentes</a>
+        <a href="#bibliografia">Bibliografía</a>
       </nav>
     </header>
 
     <main>
-      <div class="wrap">
-        <dl class="caratula">
-          <div><dt>Área</dt><dd>Ciencia y Tecnología</dd></div>
-          <div><dt>Modelo</dt><dd>IBPT-STEM</dd></div>
-          <div><dt>Sesiones</dt><dd>18</dd></div>
-          <div><dt>Lugar</dt><dd>Tayacaja, Huancavelica</dd></div>
-        </dl>
-      </div>
       <section class="wrap hero">
-        <div class="hero-text">
-          <blockquote>
-            <p>“Debemos conocer muy bien el problema que vamos a investigar, sus causas, sus consecuencias.”</p>
-            <cite>Amelia Pacheco Carhuaricra, docente de 5.º de secundaria, I.E. Mariscal Cáceres</cite>
-          </blockquote>
+        <p class="eyebrow">Universidad Nacional Autónoma de Tayacaja Daniel Hernández Morillo</p>
+        <h1>Investigación Basada en Problemas y Tecnología</h1>
+        <div class="hero-cols">
           <p class="lead">
-            Así empieza cada proyecto IBPT-STEM. Es un modelo pedagógico creado por el <b>Dr. Ronald Paucar Curasma</b>,
-            investigador de la Universidad Nacional Autónoma de Tayacaja. Los estudiantes toman un problema de su comunidad,
-            lo investigan y programan un prototipo que lo enfrenta.
+            IBPT-STEM es un modelo pedagógico creado por el Dr. Ronald Paucar Curasma para enseñar Ciencia y Tecnología
+            desde los problemas reales de la comunidad. Los estudiantes de Tayacaja investigan un problema de su entorno,
+            diseñan una solución y la convierten en un prototipo programado.
           </p>
+          <dl class="meta">
+            <div><dt>Herramienta</dt><dd>mBlock y tarjetas con sensores</dd></div>
+            <div><dt>Idiomas</dt><dd>Castellano y quechua</dd></div>
+            <div><dt>Duración</dt><dd>18 sesiones por proyecto</dd></div>
+            <div><dt>Niveles</dt><dd>Secundaria y pregrado</dd></div>
+          </dl>
         </div>
-
-        <figure class="lab">
-          <div class="program" aria-hidden="true">
-            <div class="blk ev hat">al hacer clic en <span class="flag">▶</span></div>
-            <div class="blk ctl">por siempre</div>
-            <div class="inner">
-              <div class="blk ctl">si <span class="slot">turbidez &gt; <i>5</i></span> entonces</div>
-              <div class="inner">
-                <div class="blk act" data-branch="on">encender LED <span class="pill">rojo</span></div>
-                <div class="blk act" data-branch="on">sonar alarma</div>
-              </div>
-              <div class="blk ctl">si no</div>
-              <div class="inner">
-                <div class="blk act" data-branch="off">encender LED <span class="pill">verde</span></div>
-              </div>
-              <div class="blk ctl c-end"></div>
-            </div>
-            <div class="blk ctl c-end"></div>
-          </div>
-          <div class="bench">
-            <svg viewBox="0 0 120 150" class="glass" role="img" aria-label="Vaso con agua">
-              <path d="M18 14 L102 14 L92 140 L28 140 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
-              <path id="water" d="M22 46 L98 46 L92 136 L28 136 Z" fill="#8fd3f4"/>
-              <circle id="led" cx="60" cy="8" r="0" />
-            </svg>
-            <div class="readout">
-              <span class="led" id="ledDot"></span>
-              <output id="ntu" for="turb">2 UNT</output>
-            </div>
-            <label for="turb">Mové el agua</label>
-            <input id="turb" type="range" min="0" max="20" step="0.5" value="2" />
-            <p class="hint" id="state">Agua apta. LED verde.</p>
-          </div>
-          <figcaption>Así funciona el proyecto de turbidez que ganó el 2.º puesto regional en Eureka. El límite de 5 UNT es el del reglamento peruano de calidad del agua para consumo humano.</figcaption>
-        </figure>
       </section>
 
-      <section class="wrap acro">
-        <p><b>I</b>nvestigación <b>B</b>asada en <b>P</b>roblemas y <b>T</b>ecnología</p>
-        <ul>
-          <li><span>se programa en</span>mBlock</li>
-          <li><span>se enseña en</span>castellano y quechua</li>
-          <li><span>un proyecto dura</span>18 sesiones</li>
-          <li><span>se aplica en</span>secundaria y pregrado</li>
-        </ul>
+      <section id="modelo" class="wrap quote-sec">
+        <blockquote>
+          <p>“Debemos conocer muy bien el problema que vamos a investigar, sus causas, sus consecuencias.”</p>
+          <cite>Amelia Pacheco Carhuaricra, docente de 5.º de secundaria en la I.E. Mariscal Cáceres, explicando la primera fase a su clase</cite>
+        </blockquote>
       </section>
 
       <section id="fases" class="wrap">
-        <h2>Cuatro fases que encajan una en otra</h2>
-        <p class="sub">Igual que los bloques de mBlock, una fase no arranca sin la anterior.</p>
-        <ol class="stack">
-          {fases.map((f, i) => (
-            <li class={`phase p${i + 1}`}>
-              <div class="phase-head"><span class="num">Fase {f.n}</span><h3>{f.nombre}</h3></div>
+        <div class="sec-head">
+          <h2>Las cuatro fases</h2>
+          <p>El modelo une el método de resolución de problemas con recursos tecnológicos al alcance de un colegio de provincia.</p>
+        </div>
+        <ol class="fases">
+          {fases.map((f) => (
+            <li>
+              <span class="num">{f.n}</span>
+              <h3>{f.nombre}</h3>
               <p>{f.texto}</p>
               <p class="aula">En el aula: {f.aula}</p>
             </li>
@@ -186,22 +148,51 @@ const fuentes = [
         </ol>
       </section>
 
-      <section id="proyectos" class="wrap">
-        <h2>Lo que ya salió de las aulas</h2>
-        <div class="fair">
-          {proyectos.map((p, i) => (
-            <article class={`card t${i % 4}`}>
-              <p class="tag">{p.dato}</p>
-              <h3>{p.titulo}</h3>
-              <p class="who">{p.quien}</p>
-            </article>
-          ))}
+      <section class="wrap lab-sec">
+        <div class="sec-head">
+          <h2>Un proyecto, de cerca</h2>
+          <p>
+            Estudiantes de la I.E. Mariscal Cáceres construyeron un sistema que mide la turbidez del agua y da la alerta cuando
+            deja de ser apta. Con él obtuvieron el 2.º puesto en la etapa regional de la Feria Eureka. Mové el control para ver
+            cómo responde.
+          </p>
         </div>
+        <figure class="lab" data-alarm="off">
+          <svg viewBox="0 0 120 150" class="glass" role="img" aria-label="Vaso con agua cuya turbidez cambia con el control">
+            <path id="water" d="M23 40 L97 40 L91.5 136 L28.5 136 Z" fill="#9cc9df"/>
+            <path d="M18 14 L102 14 L92 140 L28 140 Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+          </svg>
+          <div class="panel">
+            <div class="readout"><span class="led"></span><output id="ntu" for="turb">2 UNT</output></div>
+            <label for="turb">Turbidez del agua</label>
+            <input id="turb" type="range" min="0" max="20" step="0.5" value="2" />
+            <div class="scale"><span>0</span><span class="lim">límite 5</span><span>20 UNT</span></div>
+            <p id="state" class="state">Apta para consumo. LED verde encendido.</p>
+            <pre class="code" aria-label="Lógica del programa">si turbidez &gt; 5 entonces
+    encender LED rojo
+    sonar alarma
+si no
+    encender LED verde</pre>
+          </div>
+        </figure>
       </section>
 
-      <section id="docentes" class="wrap teach">
-        <h2>Docentes que aprenden a enseñar así</h2>
-        <div class="teach-body">
+      <section id="proyectos" class="wrap">
+        <div class="sec-head"><h2>Proyectos con el modelo</h2></div>
+        <ul class="proj">
+          {proyectos.map((p) => (
+            <li>
+              <h3>{p.titulo}</h3>
+              <p>{p.quien}</p>
+              <p class="dato">{p.dato}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="wrap">
+        <div class="sec-head"><h2>Formación docente</h2></div>
+        <div class="two">
           <p>
             La UNAT dicta el taller “Fortalecimiento de competencias en el área de Ciencia y Tecnología mediante el modelo IBPT-STEM”
             para docentes de Tayacaja. En las jornadas programan en castellano y quechua, trabajan el enfoque STEM y comparten lo que
@@ -210,19 +201,17 @@ const fuentes = [
           </p>
           <p>
             Quienes aplican el modelo forman la Red Peruana IBPT-STEM. En la universidad, los estudios publicados muestran mejoras
-            significativas en todas las fases en estudiantes de Ingeniería y Enfermería.
+            significativas en todas las fases en estudiantes de Ingeniería y Enfermería, con mayores avances en planificación y
+            reflexión crítica en Enfermería.
           </p>
         </div>
       </section>
 
-      <section id="fuentes" class="wrap">
-        <h2>Bibliografía</h2>
+      <section id="bibliografia" class="wrap">
+        <div class="sec-head"><h2>Bibliografía</h2></div>
         <ul class="fuentes">
           {fuentes.map((s) => (
-            <li>
-              <a href={s.u} target="_blank" rel="noopener">{s.t}</a>
-              <span>{s.d}</span>
-            </li>
+            <li><a href={s.u} target="_blank" rel="noopener">{s.t}</a>. {s.d}</li>
           ))}
         </ul>
       </section>
@@ -232,24 +221,23 @@ const fuentes = [
       <p>Sitio informativo no oficial, armado con fuentes públicas en octubre de 2026.</p>
       <p>Contacto del autor del modelo: <span class="mono">rpaucarc@unat.edu.pe</span></p>
     </footer>
+
     <script>
-      const r = document.getElementById("turb");
-      const out = document.getElementById("ntu");
-      const water = document.getElementById("water");
-      const dot = document.getElementById("ledDot");
-      const state = document.getElementById("state");
-      const lab = document.querySelector(".lab");
-      const clear = [143, 211, 244], mud = [138, 104, 62];
-      function paint() {
+      const r = document.getElementById("turb") as HTMLInputElement;
+      const out = document.getElementById("ntu")!;
+      const water = document.getElementById("water")!;
+      const state = document.getElementById("state")!;
+      const lab = document.querySelector(".lab") as HTMLElement;
+      const clear = [156, 201, 223], mud = [140, 112, 74];
+      const paint = () => {
         const v = Number(r.value);
-        const t = Math.min(v / 20, 1);
-        const c = clear.map((x, i) => Math.round(x + (mud[i] - x) * t));
-        water.setAttribute("fill", `rgb(${c.join(",")})`);
+        const t = v / 20;
+        water.setAttribute("fill", `rgb(${clear.map((x, i) => Math.round(x + (mud[i] - x) * t)).join(",")})`);
         out.textContent = `${v.toLocaleString("es-PE")} UNT`;
         const alarm = v > 5;
         lab.dataset.alarm = alarm ? "on" : "off";
-        state.textContent = alarm ? "Supera 5 UNT. LED rojo y alarma." : "Agua apta. LED verde.";
-      }
+        state.textContent = alarm ? "Supera el límite. LED rojo y alarma." : "Apta para consumo. LED verde encendido.";
+      };
       r.addEventListener("input", paint);
       paint();
     </script>
@@ -257,156 +245,106 @@ const fuentes = [
 </html>
 
 <style is:global>
-  /* Layout: hoja de cuaderno cuadriculado (pizarra en oscuro); las fases y el programa son bloques de mBlock */
+  /* Layout: editorial de una columna, sobrio; un solo acento carmín de los textiles de Huancavelica */
   :root {
-    --paper: #fbfaf5;
-    --grid: #dfe6ee;
-    --ink: #1d2433;
-    --muted: #5a6474;
-    --margin: #e5484d;
-    --ev: #ffbf00;
-    --ctl: #ffab19;
-    --sense: #4c97ff;
-    --op: #59c059;
-    --act: #0fbd8c;
-    --block-ink: #1d2433;
-    --display: "Rubik", "Arial Rounded MT Bold", system-ui, sans-serif;
-    --body: "Atkinson Hyperlegible", system-ui, sans-serif;
-    --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+    --bg: #fcfcfa;
+    --fg: #1b1a19;
+    --muted: #63605b;
+    --line: #e2dfda;
+    --accent: #a3172f;
+    --ok: #2f7d4f;
+    --serif: "Newsreader", Georgia, "Times New Roman", serif;
+    --sans: "Public Sans", system-ui, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
   }
   @media (prefers-color-scheme: dark) {
-    :root {
-      --paper: #1e3529;
-      --grid: #27443500;
-      --ink: #eef3ec;
-      --muted: #b5c4b9;
-      --margin: #f2a7a0;
-    }
+    :root { --bg: #161514; --fg: #ecebe8; --muted: #a29e97; --line: #2e2c2a; --accent: #e3687b; --ok: #6cc28f; color-scheme: dark; }
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body {
-    margin: 0; color: var(--ink); font: 18px/1.6 var(--body);
-    background-color: var(--paper);
-    background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-    background-size: 24px 24px;
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.65 var(--sans); }
+  a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+  a:hover { color: var(--accent); }
+  a:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding-inline: max(20px, 5vw); }
+  .mono { font-family: var(--mono); font-size: 0.9em; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.1; text-wrap: balance; margin: 0; }
+  h2 { font-size: clamp(1.8rem, 3.4vw, 2.5rem); letter-spacing: -0.01em; }
+  h3 { font-size: 1.3rem; font-weight: 600; }
+  section { padding-block: 72px; border-top: 1px solid var(--line); }
+  .hero { border-top: 0; padding-top: 56px; }
+
+  .weave {
+    height: 10px;
+    background:
+      linear-gradient(135deg, var(--accent) 25%, transparent 25%) -6px 0 / 12px 10px,
+      linear-gradient(225deg, var(--accent) 25%, transparent 25%) -6px 0 / 12px 10px;
   }
-  a { color: inherit; text-decoration-thickness: 2px; text-decoration-color: var(--ctl); text-underline-offset: 3px; }
-  a:focus-visible { outline: 3px solid var(--sense); outline-offset: 2px; }
-  .wrap { max-width: 1120px; margin: 0 auto; padding-inline: max(20px, 4vw); }
-  .mono { font-family: var(--mono); font-size: 0.85em; }
-  h1, h2, h3 { font-family: var(--display); line-height: 1.1; text-wrap: balance; margin: 0; }
-  h2 { font-size: clamp(1.9rem, 4vw, 2.8rem); font-weight: 800; letter-spacing: -0.015em; }
-  h3 { font-size: 1.25rem; font-weight: 700; }
-  section { padding-block: 64px; }
-  .sub { color: var(--muted); margin: 8px 0 0; }
+  .top { display: flex; justify-content: space-between; align-items: center; padding-block: 20px; gap: 12px; flex-wrap: wrap; }
+  .logo { font-weight: 700; letter-spacing: 0.06em; text-decoration: none; font-size: 0.95rem; }
+  .top nav { display: flex; gap: 22px; flex-wrap: wrap; font-size: 0.92rem; }
+  .top nav a { text-decoration: none; color: var(--muted); }
+  .top nav a:hover { color: var(--fg); }
 
-  .top { display: flex; justify-content: space-between; align-items: center; padding-block: 18px; gap: 12px; flex-wrap: wrap; }
-  .logo { font-family: var(--display); font-weight: 800; font-size: 1.3rem; text-decoration: none; }
-  .logo span { color: var(--ctl); }
-  .top nav { display: flex; gap: 18px; flex-wrap: wrap; }
-  .top nav a { text-decoration: none; font-weight: 700; font-size: 0.95rem; }
-  .top nav a:hover { text-decoration: underline; text-decoration-color: var(--ctl); }
+  .eyebrow { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); font-weight: 700; margin: 0 0 20px; }
+  h1 { font-size: clamp(2.6rem, 6.4vw, 4.9rem); letter-spacing: -0.02em; max-width: 15ch; font-weight: 400; }
+  .hero-cols { display: grid; grid-template-columns: 1.4fr 1fr; gap: 56px; margin-top: 40px; }
+  .lead { margin: 0; font-size: 1.15rem; max-width: 56ch; min-width: 0; }
+  .meta { margin: 0; display: flex; flex-direction: column; }
+  .meta div { padding-block: 10px; border-bottom: 1px solid var(--line); }
+  .meta div:first-child { border-top: 1px solid var(--line); }
+  .meta dt { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  .meta dd { margin: 0; font-weight: 600; }
 
-  .hero { display: grid; grid-template-columns: 1.25fr 1fr; gap: 56px; align-items: center; padding-top: 32px; }
-  .hero-text { border-left: 2px solid var(--margin); padding-left: 28px; min-width: 0; }
-  .where { font-family: var(--display); font-weight: 700; color: var(--muted); margin: 0 0 20px; letter-spacing: 0.04em; text-transform: uppercase; font-size: 0.8rem; }
-  blockquote { margin: 0; }
-  blockquote p { font-family: var(--display); font-weight: 800; font-size: clamp(2rem, 4.6vw, 3.6rem); line-height: 1.08; letter-spacing: -0.02em; margin: 0; text-wrap: balance; }
-  cite { display: block; font-style: normal; color: var(--muted); margin-top: 16px; font-size: 0.95rem; }
-  .lead { margin: 28px 0 0; max-width: 58ch; }
+  .quote-sec blockquote { margin: 0 0 0 auto; max-width: 820px; }
+  .quote-sec p { font-family: var(--serif); font-size: clamp(1.8rem, 4vw, 3.2rem); line-height: 1.15; letter-spacing: -0.01em; margin: 0; }
+  .quote-sec cite { display: block; font-style: normal; color: var(--muted); font-size: 0.92rem; margin-top: 20px; max-width: 60ch; }
 
-  .program { margin: 0; font-family: var(--display); font-weight: 500; font-size: 0.95rem; color: var(--block-ink); min-width: 0; }
-  .blk { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 6px; position: relative; min-width: 180px; box-shadow: inset 0 -3px 0 rgb(0 0 0 / 0.15); }
-  .blk::after { content: ""; position: absolute; left: 18px; bottom: -6px; width: 22px; height: 7px; background: inherit; border-radius: 0 0 5px 5px; z-index: 1; }
-  .hat { border-radius: 22px 22px 6px 6px; padding-top: 18px; }
-  .ev { background: var(--ev); }
-  .ctl { background: var(--ctl); }
-  .act { background: var(--act); color: #fff; }
-  .c-end { min-height: 18px; min-width: 120px; padding: 0; }
-  .c-end::after, .c-top::after, .c-mid::after { left: 34px; }
-  .inner { border-left: 18px solid var(--ctl); padding: 4px 0 4px 0; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
-  .inner .inner { border-left-color: var(--ctl); }
-  .program > .blk, .program > .inner { display: flex; width: fit-content; }
-  .program > * + * { margin-top: 2px; }
-  .slot { background: var(--op); color: #fff; padding: 4px 12px; border-radius: 999px; }
-  .slot i { font-style: normal; background: #fff; color: var(--block-ink); border-radius: 999px; padding: 0 8px; }
-  .pill { background: #fff; color: var(--block-ink); border-radius: 999px; padding: 0 10px; }
-  .flag { color: #2f9e44; }
-  figcaption { font-family: var(--body); font-weight: 400; color: var(--muted); font-size: 0.85rem; margin-top: 18px; max-width: 40ch; }
+  .sec-head { display: grid; grid-template-columns: 1fr 1.4fr; gap: 40px; align-items: baseline; }
+  .sec-head p { margin: 0; color: var(--muted); max-width: 58ch; }
 
-  .acro { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 24px; padding-block: 32px; border-block: 2px dashed var(--muted); }
-  .acro p { font-family: var(--display); font-size: clamp(1.3rem, 2.6vw, 1.8rem); margin: 0; font-weight: 500; }
-  .acro b { color: var(--ctl); font-weight: 800; }
-  .acro ul { display: flex; flex-wrap: wrap; gap: 28px; list-style: none; padding: 0; margin: 0; }
-  .acro li { display: flex; flex-direction: column; font-weight: 700; }
-  .acro li span { font-weight: 400; color: var(--muted); font-size: 0.85rem; }
+  .fases { list-style: none; padding: 0; margin: 48px 0 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+  .fases li { border-top: 2px solid var(--fg); padding-top: 18px; min-width: 0; }
+  .num { font-family: var(--serif); font-size: 2.6rem; color: var(--accent); line-height: 1; }
+  .fases h3 { margin: 14px 0 10px; }
+  .fases p { margin: 0; font-size: 0.97rem; }
+  .fases .aula { margin-top: 12px; color: var(--muted); font-size: 0.88rem; }
 
-  .stack { list-style: none; padding: 0; margin: 36px 0 0; display: flex; flex-direction: column; }
-  .phase { color: var(--block-ink); padding: 22px 26px 26px; border-radius: 8px; max-width: 760px; position: relative; box-shadow: inset 0 -4px 0 rgb(0 0 0 / 0.14); }
-  .phase::after { content: ""; position: absolute; left: 36px; bottom: -10px; width: 36px; height: 11px; background: inherit; border-radius: 0 0 8px 8px; z-index: 1; }
-  .phase:last-child::after { display: none; }
-  .phase + .phase { margin-top: 2px; }
-  .p1 { background: var(--ev); }
-  .p2 { background: var(--ctl); margin-left: 6%; }
-  .p3 { background: var(--op); margin-left: 12%; }
-  .p4 { background: var(--sense); margin-left: 18%; color: #fff; }
-  .phase-head { display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap; }
-  .num { font-family: var(--mono); font-size: 0.8rem; background: rgb(255 255 255 / 0.55); color: var(--block-ink); padding: 2px 10px; border-radius: 999px; }
-  .phase h3 { font-size: 1.5rem; }
-  .phase p { margin: 10px 0 0; max-width: 60ch; }
-  .phase .aula { font-size: 0.9rem; opacity: 0.85; }
+  .lab { margin: 48px 0 0; display: grid; grid-template-columns: 200px 1fr; gap: 48px; align-items: center; padding: 36px; border: 1px solid var(--line); }
+  .glass { width: 100%; max-width: 200px; color: var(--fg); }
+  #water { transition: fill .15s; }
+  .panel { min-width: 0; max-width: 460px; }
+  .readout { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 2rem; font-variant-numeric: tabular-nums; }
+  .led { width: 14px; height: 14px; border-radius: 50%; background: var(--ok); transition: background .15s; }
+  .lab[data-alarm="on"] .led { background: var(--accent); }
+  .panel label { display: block; margin-top: 18px; font-weight: 600; font-size: 0.9rem; }
+  .panel input { width: 100%; accent-color: var(--accent); margin-top: 8px; }
+  .scale { display: flex; justify-content: space-between; position: relative; font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
+  .scale .lim { position: absolute; left: 25%; translate: -50% 0; color: var(--accent); }
+  .state { margin: 14px 0 0; font-weight: 600; min-height: 1.6em; }
+  .lab[data-alarm="on"] .state { color: var(--accent); }
+  .code { margin: 20px 0 0; font-family: var(--mono); font-size: 0.82rem; color: var(--muted); background: transparent; border-left: 2px solid var(--line); padding: 4px 0 4px 14px; white-space: pre; overflow-x: auto; }
 
-  .fair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; margin-top: 36px; }
-  .card { background: var(--paper); color: var(--ink); border: 2px solid var(--ink); padding: 22px; position: relative; box-shadow: 6px 6px 0 var(--ink); }
-  .t0 { transform: rotate(-1.2deg); } .t1 { transform: rotate(0.8deg); } .t2 { transform: rotate(-0.5deg); } .t3 { transform: rotate(1.3deg); }
-  .card::before { content: ""; position: absolute; top: -12px; left: 50%; width: 70px; height: 22px; translate: -50% 0; background: color-mix(in srgb, var(--ev) 70%, transparent); rotate: -3deg; }
-  .tag { font-family: var(--display); font-weight: 700; font-size: 0.8rem; color: var(--margin); text-transform: uppercase; letter-spacing: 0.04em; margin: 0 0 10px; }
-  .who { color: var(--muted); margin: 10px 0 0; font-size: 0.95rem; }
+  .proj { list-style: none; padding: 0; margin: 40px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; }
+  .proj li { padding-block: 22px; border-bottom: 1px solid var(--line); }
+  .proj p { margin: 6px 0 0; color: var(--muted); font-size: 0.95rem; }
+  .proj .dato { color: var(--fg); font-weight: 600; }
 
-  .teach-body { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 24px; }
-  .teach-body p { margin: 0; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 32px; }
+  .two p { margin: 0; }
 
-  .fuentes { list-style: none; padding: 0; margin: 20px 0 0; counter-reset: f; }
-  .fuentes li { display: flex; flex-direction: column; padding-block: 12px; border-bottom: 1px solid var(--grid); }
-  .fuentes a { font-weight: 700; }
-  .fuentes span { color: var(--muted); font-size: 0.9rem; }
-  .foot { padding-block: 40px; color: var(--muted); font-size: 0.9rem; }
+  .fuentes { list-style: none; padding: 0; margin: 32px 0 0; max-width: 72ch; }
+  .fuentes li { padding-left: 2em; text-indent: -2em; margin-bottom: 14px; color: var(--muted); }
+  .fuentes a { color: var(--fg); }
+  .foot { padding-block: 40px; color: var(--muted); font-size: 0.88rem; border-top: 1px solid var(--line); }
   .foot p { margin: 4px 0; }
 
   @media (max-width: 860px) {
-    .hero, .teach-body, .fair { grid-template-columns: 1fr; }
-    .p2, .p3, .p4 { margin-left: 0; }
+    .hero-cols, .sec-head, .two, .proj { grid-template-columns: 1fr; gap: 24px; }
+    .fases { grid-template-columns: 1fr 1fr; }
+    .lab { grid-template-columns: 1fr; padding: 24px; }
+    .glass { max-width: 140px; }
   }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-
-  h1, h2 { font-family: "Bricolage Grotesque", var(--display); }
-  blockquote p { font-family: "Bricolage Grotesque", var(--display) !important; font-weight: 800; }
-  .caratula { display: flex; flex-wrap: wrap; gap: 0; margin: 8px 0 0; border: 2px solid var(--ink); }
-  .caratula div { flex: 1 1 160px; padding: 8px 14px; border-right: 2px solid var(--ink); }
-  .caratula div:last-child { border-right: 0; }
-  .caratula dt { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
-  .caratula dd { margin: 0; font-family: var(--display); font-weight: 700; }
-  .slot, .blk { white-space: nowrap; }
-  blockquote p { font-size: clamp(2rem, 4vw, 3.1rem) !important; }
-  .lab { margin: 0; display: grid; grid-template-columns: auto 150px; gap: 20px 28px; align-items: start; min-width: 0; }
-  .lab figcaption { grid-column: 1 / -1; }
-  .program [data-branch] { transition: filter .2s, opacity .2s; }
-  .lab[data-alarm="on"] [data-branch="off"], .lab[data-alarm="off"] [data-branch="on"] { opacity: .35; filter: saturate(.3); }
-  .lab[data-alarm="on"] [data-branch="on"], .lab[data-alarm="off"] [data-branch="off"] { outline: 3px solid var(--ev); outline-offset: 1px; }
-  .bench { display: flex; flex-direction: column; gap: 8px; }
-  .glass { width: 120px; color: var(--ink); }
-  #water { transition: fill .15s; }
-  .readout { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 1.1rem; font-variant-numeric: tabular-nums; }
-  .led { width: 14px; height: 14px; border-radius: 50%; background: #2fb344; box-shadow: 0 0 0 3px color-mix(in srgb, #2fb344 30%, transparent); }
-  .lab[data-alarm="on"] .led { background: var(--margin); box-shadow: 0 0 0 3px color-mix(in srgb, var(--margin) 35%, transparent); }
-  .bench label { font-weight: 700; font-size: 0.85rem; }
-  .bench input { width: 100%; accent-color: var(--ctl); }
-  .hint { margin: 0; font-size: 0.85rem; color: var(--muted); min-height: 2.6em; }
-  .phase { transition: translate .18s ease; }
-  .phase:hover { translate: 4px -2px; }
-  .fuentes li { padding-left: 2em; text-indent: -2em; display: block; }
-  .fuentes span { display: inline; margin-left: 6px; }
-  @media (max-width: 560px) { .lab { grid-template-columns: 1fr; } }
-  @media (prefers-reduced-motion: reduce) { .phase, #water, .program [data-branch] { transition: none; } }
+  @media (max-width: 520px) { .fases { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } #water, .led { transition: none; } }
 </style>
