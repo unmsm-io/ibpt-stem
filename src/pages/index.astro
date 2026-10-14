@@ -91,7 +91,7 @@ const fuentes = [
     <meta name="description" content="Modelo pedagógico creado por el Dr. Ronald Paucar Curasma en la Universidad Nacional Autónoma de Tayacaja." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Rubik:wght@500;700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
   </head>
   <body>
     <header class="wrap top">
@@ -105,9 +105,16 @@ const fuentes = [
     </header>
 
     <main>
+      <div class="wrap">
+        <dl class="caratula">
+          <div><dt>Área</dt><dd>Ciencia y Tecnología</dd></div>
+          <div><dt>Modelo</dt><dd>IBPT-STEM</dd></div>
+          <div><dt>Sesiones</dt><dd>18</dd></div>
+          <div><dt>Lugar</dt><dd>Tayacaja, Huancavelica</dd></div>
+        </dl>
+      </div>
       <section class="wrap hero">
         <div class="hero-text">
-          <p class="where">UNAT · Pampas, Tayacaja, Huancavelica</p>
           <blockquote>
             <p>“Debemos conocer muy bien el problema que vamos a investigar, sus causas, sus consecuencias.”</p>
             <cite>Amelia Pacheco Carhuaricra, docente de 5.º de secundaria, I.E. Mariscal Cáceres</cite>
@@ -119,23 +126,39 @@ const fuentes = [
           </p>
         </div>
 
-        <figure class="program" aria-label="Programa en bloques de un sistema de alerta de turbidez">
-          <div class="blk ev hat">al hacer clic en <span class="flag">▶</span></div>
-          <div class="blk ctl c-top">por siempre</div>
-          <div class="inner">
-            <div class="blk ctl c-top">si <span class="slot op">turbidez &gt; <i>umbral</i></span> entonces</div>
+        <figure class="lab">
+          <div class="program" aria-hidden="true">
+            <div class="blk ev hat">al hacer clic en <span class="flag">▶</span></div>
+            <div class="blk ctl">por siempre</div>
             <div class="inner">
-              <div class="blk act">encender LED <span class="pill">rojo</span></div>
-              <div class="blk act">sonar alarma</div>
-            </div>
-            <div class="blk ctl c-mid">si no</div>
-            <div class="inner">
-              <div class="blk act">encender LED <span class="pill">verde</span></div>
+              <div class="blk ctl">si <span class="slot">turbidez &gt; <i>5</i></span> entonces</div>
+              <div class="inner">
+                <div class="blk act" data-branch="on">encender LED <span class="pill">rojo</span></div>
+                <div class="blk act" data-branch="on">sonar alarma</div>
+              </div>
+              <div class="blk ctl">si no</div>
+              <div class="inner">
+                <div class="blk act" data-branch="off">encender LED <span class="pill">verde</span></div>
+              </div>
+              <div class="blk ctl c-end"></div>
             </div>
             <div class="blk ctl c-end"></div>
           </div>
-          <div class="blk ctl c-end"></div>
-          <figcaption>Esquema de la lógica del proyecto “Sistema tecnológico para el monitoreo y alerta de turbidez del agua”, armado en mBlock.</figcaption>
+          <div class="bench">
+            <svg viewBox="0 0 120 150" class="glass" role="img" aria-label="Vaso con agua">
+              <path d="M18 14 L102 14 L92 140 L28 140 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+              <path id="water" d="M22 46 L98 46 L92 136 L28 136 Z" fill="#8fd3f4"/>
+              <circle id="led" cx="60" cy="8" r="0" />
+            </svg>
+            <div class="readout">
+              <span class="led" id="ledDot"></span>
+              <output id="ntu" for="turb">2 UNT</output>
+            </div>
+            <label for="turb">Mové el agua</label>
+            <input id="turb" type="range" min="0" max="20" step="0.5" value="2" />
+            <p class="hint" id="state">Agua apta. LED verde.</p>
+          </div>
+          <figcaption>Así funciona el proyecto de turbidez que ganó el 2.º puesto regional en Eureka. El límite de 5 UNT es el del reglamento peruano de calidad del agua para consumo humano.</figcaption>
         </figure>
       </section>
 
@@ -193,7 +216,7 @@ const fuentes = [
       </section>
 
       <section id="fuentes" class="wrap">
-        <h2>Fuentes</h2>
+        <h2>Bibliografía</h2>
         <ul class="fuentes">
           {fuentes.map((s) => (
             <li>
@@ -209,6 +232,27 @@ const fuentes = [
       <p>Sitio informativo no oficial, armado con fuentes públicas en octubre de 2026.</p>
       <p>Contacto del autor del modelo: <span class="mono">rpaucarc@unat.edu.pe</span></p>
     </footer>
+    <script>
+      const r = document.getElementById("turb");
+      const out = document.getElementById("ntu");
+      const water = document.getElementById("water");
+      const dot = document.getElementById("ledDot");
+      const state = document.getElementById("state");
+      const lab = document.querySelector(".lab");
+      const clear = [143, 211, 244], mud = [138, 104, 62];
+      function paint() {
+        const v = Number(r.value);
+        const t = Math.min(v / 20, 1);
+        const c = clear.map((x, i) => Math.round(x + (mud[i] - x) * t));
+        water.setAttribute("fill", `rgb(${c.join(",")})`);
+        out.textContent = `${v.toLocaleString("es-PE")} UNT`;
+        const alarm = v > 5;
+        lab.dataset.alarm = alarm ? "on" : "off";
+        state.textContent = alarm ? "Supera 5 UNT. LED rojo y alarma." : "Agua apta. LED verde.";
+      }
+      r.addEventListener("input", paint);
+      paint();
+    </script>
   </body>
 </html>
 
@@ -335,4 +379,34 @@ const fuentes = [
     .p2, .p3, .p4 { margin-left: 0; }
   }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  h1, h2 { font-family: "Bricolage Grotesque", var(--display); }
+  blockquote p { font-family: "Bricolage Grotesque", var(--display) !important; font-weight: 800; }
+  .caratula { display: flex; flex-wrap: wrap; gap: 0; margin: 8px 0 0; border: 2px solid var(--ink); }
+  .caratula div { flex: 1 1 160px; padding: 8px 14px; border-right: 2px solid var(--ink); }
+  .caratula div:last-child { border-right: 0; }
+  .caratula dt { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+  .caratula dd { margin: 0; font-family: var(--display); font-weight: 700; }
+  .slot, .blk { white-space: nowrap; }
+  blockquote p { font-size: clamp(2rem, 4vw, 3.1rem) !important; }
+  .lab { margin: 0; display: grid; grid-template-columns: auto 150px; gap: 20px 28px; align-items: start; min-width: 0; }
+  .lab figcaption { grid-column: 1 / -1; }
+  .program [data-branch] { transition: filter .2s, opacity .2s; }
+  .lab[data-alarm="on"] [data-branch="off"], .lab[data-alarm="off"] [data-branch="on"] { opacity: .35; filter: saturate(.3); }
+  .lab[data-alarm="on"] [data-branch="on"], .lab[data-alarm="off"] [data-branch="off"] { outline: 3px solid var(--ev); outline-offset: 1px; }
+  .bench { display: flex; flex-direction: column; gap: 8px; }
+  .glass { width: 120px; color: var(--ink); }
+  #water { transition: fill .15s; }
+  .readout { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 1.1rem; font-variant-numeric: tabular-nums; }
+  .led { width: 14px; height: 14px; border-radius: 50%; background: #2fb344; box-shadow: 0 0 0 3px color-mix(in srgb, #2fb344 30%, transparent); }
+  .lab[data-alarm="on"] .led { background: var(--margin); box-shadow: 0 0 0 3px color-mix(in srgb, var(--margin) 35%, transparent); }
+  .bench label { font-weight: 700; font-size: 0.85rem; }
+  .bench input { width: 100%; accent-color: var(--ctl); }
+  .hint { margin: 0; font-size: 0.85rem; color: var(--muted); min-height: 2.6em; }
+  .phase { transition: translate .18s ease; }
+  .phase:hover { translate: 4px -2px; }
+  .fuentes li { padding-left: 2em; text-indent: -2em; display: block; }
+  .fuentes span { display: inline; margin-left: 6px; }
+  @media (max-width: 560px) { .lab { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { .phase, #water, .program [data-branch] { transition: none; } }
 </style>
