@@ -1,0 +1,294 @@
+---
+const fases = [
+  {
+    n: "1",
+    nombre: "Comprensión del problema",
+    texto: "El grupo elige un problema real de su comunidad y lo estudia a fondo: qué lo causa, a quién afecta y qué consecuencias tiene.",
+    aula: "Identificar el problema, sus causas y sus consecuencias.",
+  },
+  {
+    n: "2",
+    nombre: "Elaboración de actividades",
+    texto: "Se diseña la solución y se planifica el trabajo paso a paso, con un cronograma de actividades por semana.",
+    aula: "Armar el cuadro de actividades y el cronograma.",
+  },
+  {
+    n: "3",
+    nombre: "Ejecución e implementación",
+    texto: "Se construye y programa el prototipo o maqueta con mBlock y una tarjeta programable con sensores.",
+    aula: "Construir, programar y presentar el prototipo.",
+  },
+  {
+    n: "4",
+    nombre: "Revisión y evaluación",
+    texto: "Se revisa qué falta en el programa y en la maqueta, se corrige y el trabajo se expone ante la clase.",
+    aula: "Evaluar, corregir y exponer al cierre de las 18 sesiones.",
+  },
+];
+
+const proyectos = [
+  {
+    titulo: "Monitoreo y alerta de turbidez del agua",
+    quien: "Estudiantes de la I.E. Mariscal Cáceres, Daniel Hernández",
+    dato: "2.º puesto en la Feria Eureka, etapa regional",
+  },
+  {
+    titulo: "Calidad del agua para prevenir infecciones estomacales en Ustuna",
+    quien: "Estudiantes de Enfermería, UNAT",
+    dato: "Caso publicado en Sustainability (2025)",
+  },
+  {
+    titulo: "Calidad del aire en casas con cocina a leña",
+    quien: "Estudiantes de Enfermería, UNAT",
+    dato: "Simulaciones interactivas en quechua con mBlock",
+  },
+  {
+    titulo: "Control del nivel de ruido en la biblioteca",
+    quien: "UNAT, sensor de sonido KY-037",
+    dato: "Publicado en la revista Llamkasun",
+  },
+];
+
+const fuentes = [
+  {
+    t: "IBPT: An Approach to Promote Research and Technological Competencies in Higher Education",
+    d: "Paucar-Curasma, Unsihuay Tovar, Acra-Despradel y Villalba-Condori. Sustainability 17(20), 9309, 2025.",
+    u: "https://doi.org/10.3390/su17209309",
+  },
+  {
+    t: "Enfoque IBPT en educación semipresencial",
+    d: "Paucar Curasma. EduTicInnova 13(1), 85-93, 2025.",
+    u: "https://portalrevistas.aulavirtualusmp.pe/index.php/eduticinnova/article/view/3323",
+  },
+  {
+    t: "Promoting gender equality through computational thinking and STEM activities",
+    d: "Revista AiBi, 2025.",
+    u: "https://revistas.udes.edu.co/aibi/en/article/view/4073",
+  },
+  {
+    t: "Control y monitoreo del nivel de ruido con el sensor KY-037",
+    d: "Revista Llamkasun, UNAT.",
+    u: "https://llamkasun.unat.edu.pe/index.php/revista/article/view/143",
+  },
+  {
+    t: "Perfil de Ronald Paucar Curasma",
+    d: "ResearchGate.",
+    u: "https://www.researchgate.net/profile/Ronald-Paucar-Curasma",
+  },
+  {
+    t: "Página IBPT-STEM",
+    d: "Facebook, publicaciones del taller y videos de aula.",
+    u: "https://www.facebook.com/ibptstem",
+  },
+];
+---
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>IBPT-STEM | Investigación Basada en Problemas y Tecnología</title>
+    <meta name="description" content="Modelo pedagógico creado por el Dr. Ronald Paucar Curasma en la Universidad Nacional Autónoma de Tayacaja." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="wrap top">
+      <span class="mono">IBPT-STEM</span>
+      <nav>
+        <a href="#modelo">Modelo</a>
+        <a href="#fases">Fases</a>
+        <a href="#proyectos">Proyectos</a>
+        <a href="#fuentes">Fuentes</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="wrap hero">
+        <p class="mono kicker">Pampas, Tayacaja, Huancavelica · 3 276 m s. n. m.</p>
+        <h1>Ciencia que empieza por un problema del pueblo</h1>
+        <p class="lead">
+          IBPT-STEM es un modelo pedagógico para enseñar Ciencia y Tecnología a partir de problemas reales de la comunidad.
+          Los estudiantes investigan, diseñan y programan un prototipo que responde a ese problema. Lo creó el
+          Dr. Ronald Paucar Curasma, docente investigador de la Universidad Nacional Autónoma de Tayacaja Daniel Hernández Morillo (UNAT).
+        </p>
+        <div class="sensor" aria-label="Lectura de ejemplo de un sensor de turbidez">
+          <div class="row"><span>sensor</span><b>turbidez</b></div>
+          <div class="row"><span>lectura</span><b>4.2 NTU</b></div>
+          <div class="row"><span>límite OMS</span><b>5 NTU</b></div>
+          <div class="bar"><i style="width:84%"></i></div>
+          <p class="mono small">Ejemplo ilustrativo del tipo de dato que mide un proyecto IBPT-STEM.</p>
+        </div>
+      </section>
+
+      <section id="modelo" class="wrap split">
+        <h2>Qué significa IBPT</h2>
+        <div class="cols">
+          <div>
+            <p class="big"><b>I</b>nvestigación <b>B</b>asada en <b>P</b>roblemas y <b>T</b>ecnología.</p>
+            <p>
+              El modelo une el método de resolución de problemas con recursos tecnológicos al alcance de un colegio o una universidad
+              de provincia: programación visual, tarjetas con sensores y maquetas. La versión STEM lo lleva a la secundaria y lo integra
+              con ciencia, tecnología, ingeniería y matemática.
+            </p>
+          </div>
+          <ul class="facts">
+            <li><span class="mono">Herramienta</span>mBlock, programación por bloques</li>
+            <li><span class="mono">Idiomas</span>Castellano y quechua</li>
+            <li><span class="mono">Duración en aula</span>18 sesiones por proyecto</li>
+            <li><span class="mono">Niveles</span>Secundaria y pregrado (Ingeniería, Enfermería)</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="fases" class="band">
+        <div class="wrap">
+          <h2>Las cuatro fases</h2>
+          <p class="sub">Así las explica la profesora Amelia Pacheco Carhuaricra a su clase de 5.º de secundaria en la I.E. Mariscal Cáceres.</p>
+          <ol class="fases">
+            {fases.map((f) => (
+              <li>
+                <span class="num">{f.n}</span>
+                <h3>{f.nombre}</h3>
+                <p>{f.texto}</p>
+                <p class="mono small">En el aula: {f.aula}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section id="proyectos" class="wrap">
+        <h2>Proyectos hechos con el modelo</h2>
+        <div class="proj">
+          {proyectos.map((p) => (
+            <article>
+              <h3>{p.titulo}</h3>
+              <p>{p.quien}</p>
+              <p class="mono small tag">{p.dato}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="wrap split">
+        <h2>Formación docente</h2>
+        <div class="cols">
+          <p>
+            La UNAT dicta el taller “Fortalecimiento de competencias en el área de Ciencia y Tecnología mediante el modelo IBPT-STEM” para docentes de Tayacaja. Las jornadas cubren programación visual en castellano y quechua, el enfoque STEM, la integración de
+            sus disciplinas y el intercambio de experiencias de aula. La meta va más allá del manejo de herramientas: que cada docente sepa
+            articular ciencia, pensamiento computacional e investigación en experiencias de aprendizaje de su contexto.
+          </p>
+          <p>
+            Los docentes que aplican el modelo forman la Red Peruana IBPT-STEM. Los resultados publicados muestran mejoras significativas
+            en todas las fases del modelo en estudiantes de Ingeniería y Enfermería, con avances mayores en planificación y reflexión
+            crítica en Enfermería.
+          </p>
+        </div>
+      </section>
+
+      <section id="fuentes" class="wrap">
+        <h2>Fuentes</h2>
+        <ul class="fuentes">
+          {fuentes.map((s) => (
+            <li>
+              <a href={s.u} target="_blank" rel="noopener">{s.t}</a>
+              <span>{s.d}</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </main>
+
+    <footer class="wrap foot">
+      <p>Sitio informativo no oficial, armado con fuentes públicas en octubre de 2026.</p>
+      <p>Contacto del autor del modelo: <span class="mono">rpaucarc@unat.edu.pe</span></p>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  /* Layout: una columna ancha con bandas de color para las fases; paleta de tierra y agua de los Andes */
+  :root {
+    --bg: #f3f5f1;
+    --fg: #17221d;
+    --muted: #55645c;
+    --line: #cfd8d1;
+    --field: #1f4d3a;
+    --field-fg: #eef4ef;
+    --ochre: #c8861f;
+    --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --body: "Atkinson Hyperlegible", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111915;
+      --fg: #e6ece7;
+      --muted: #9aaba1;
+      --line: #2b3a32;
+      --field: #183a2c;
+      --field-fg: #e6ece7;
+      --ochre: #e0a243;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 17px/1.6 var(--body); }
+  a { color: inherit; text-decoration-color: var(--ochre); text-underline-offset: 3px; }
+  a:focus-visible { outline: 2px solid var(--ochre); outline-offset: 2px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding-inline: max(20px, 4vw); }
+  .mono { font-family: var(--mono); font-size: 0.8rem; letter-spacing: 0.02em; }
+  .small { font-size: 0.75rem; color: var(--muted); }
+  h1, h2, h3 { font-family: var(--display); line-height: 1.05; text-wrap: balance; margin: 0; }
+  h1 { font-size: clamp(2.6rem, 7vw, 5.4rem); font-weight: 800; letter-spacing: -0.03em; max-width: 14ch; }
+  h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; letter-spacing: -0.02em; }
+  h3 { font-size: 1.3rem; font-weight: 700; }
+  section { padding-block: 72px; }
+  .top { display: flex; justify-content: space-between; align-items: center; padding-block: 20px; flex-wrap: wrap; gap: 12px; }
+  .top nav { display: flex; gap: 20px; flex-wrap: wrap; }
+  .top nav a { text-decoration: none; font-size: 0.95rem; }
+  .top nav a:hover { color: var(--ochre); }
+  .hero { display: grid; grid-template-columns: 1.6fr 1fr; gap: 48px; align-items: end; padding-top: 40px; }
+  .hero > :not(.sensor) { grid-column: 1; }
+  .kicker { color: var(--ochre); font-weight: 600; margin: 0 0 16px; }
+  .lead { font-size: 1.15rem; max-width: 60ch; color: var(--muted); margin: 24px 0 0; }
+  .sensor { grid-column: 2; grid-row: 1 / span 3; border: 1.5px solid var(--fg); padding: 20px; font-family: var(--mono); background: var(--bg); }
+  .sensor .row { display: flex; justify-content: space-between; border-bottom: 1px dashed var(--line); padding-block: 8px; font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+  .sensor .row span { color: var(--muted); }
+  .bar { height: 10px; background: var(--line); margin-top: 16px; }
+  .bar i { display: block; height: 100%; background: var(--ochre); }
+  .split { display: grid; grid-template-columns: 1fr 2fr; gap: 40px; border-top: 1px solid var(--line); }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; min-width: 0; }
+  .cols p { margin: 0; }
+  .big { font-family: var(--display); font-size: 1.6rem; line-height: 1.2; margin-bottom: 16px !important; }
+  .big b { color: var(--ochre); }
+  .facts { list-style: none; margin: 0; padding: 0; }
+  .facts li { display: flex; flex-direction: column; padding-block: 12px; border-bottom: 1px solid var(--line); }
+  .facts .mono { color: var(--muted); }
+  .band { background: var(--field); color: var(--field-fg); }
+  .band .sub { opacity: 0.8; max-width: 60ch; }
+  .fases { list-style: none; padding: 0; margin: 40px 0 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+  .fases li { padding: 24px 24px 24px 0; border-top: 3px solid var(--ochre); margin-right: 16px; }
+  .fases .num { font-family: var(--display); font-size: 3.5rem; font-weight: 800; color: var(--ochre); line-height: 1; }
+  .fases h3 { margin: 12px 0 8px; }
+  .fases .small { color: inherit; opacity: 0.75; }
+  .proj { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; margin-top: 32px; border-top: 1px solid var(--line); }
+  .proj article { padding: 24px 24px 24px 0; border-bottom: 1px solid var(--line); }
+  .proj article p { margin: 8px 0 0; color: var(--muted); }
+  .proj .tag { color: var(--ochre); font-weight: 600; }
+  .fuentes { list-style: none; padding: 0; margin: 24px 0 0; }
+  .fuentes li { display: flex; flex-direction: column; padding-block: 14px; border-bottom: 1px solid var(--line); }
+  .fuentes a { font-weight: 700; }
+  .fuentes span { color: var(--muted); font-size: 0.9rem; }
+  .foot { padding-block: 40px; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--line); }
+  .foot p { margin: 4px 0; }
+  @media (max-width: 860px) {
+    .hero, .split, .cols, .proj { grid-template-columns: 1fr; }
+    .sensor { grid-column: 1; grid-row: auto; }
+    .fases { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 520px) { .fases { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
