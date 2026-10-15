@@ -112,49 +112,64 @@ const fuentes = [
         </p>
       </section>
 
-      <section class="s" style="--n:2">
-        <figure class="demo lab" data-alarm="off">
-          <div class="stage">
-            <svg viewBox="0 0 120 150" class="glass" role="img" aria-label="Vaso con agua cuya turbidez cambia con el control">
-              <defs>
-                <clipPath id="cup"><path d="M23.5 40 L96.5 40 L91.6 135 L28.4 135 Z" /></clipPath>
-              </defs>
-              <g clip-path="url(#cup)">
-                <rect id="water" x="0" y="40" width="120" height="100" fill="#a9d2e6" />
-                <g id="sed"></g>
-              </g>
-              <path d="M18 14 L102 14 L92 140 L28 140 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
-            </svg>
-            <div class="status">
-              <span class="led"></span>
-              <span id="state">Apta</span>
-            </div>
+      <section class="s journey" style="--n:2" aria-label="Recorrido por las cuatro fases">
+        <h2>Un proyecto, fase por fase</h2>
+        <div class="jx" data-step="1">
+          <div class="stage-wrap">
+            <figure class="demo lab" data-alarm="on">
+              <div class="stage">
+                <svg viewBox="0 0 160 160" class="glass" role="img" aria-label="Vaso con agua de la comunidad">
+                  <defs><clipPath id="cup"><path d="M43.5 40 L116.5 40 L111.6 135 L48.4 135 Z" /></clipPath></defs>
+                  <g clip-path="url(#cup)">
+                    <rect id="water" x="0" y="40" width="160" height="100" fill="#a9d2e6" />
+                    <g id="sed"></g>
+                  </g>
+                  <g class="probe">
+                    <rect x="88" y="4" width="10" height="20" rx="2" />
+                    <line x1="93" y1="24" x2="93" y2="112" />
+                    <circle cx="93" cy="114" r="3" />
+                  </g>
+                  <path d="M38 14 L122 14 L112 140 L48 140 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+                  <g class="notes">
+                    <text x="6" y="64">causas</text>
+                    <line x1="34" y1="61" x2="52" y2="70" />
+                    <text x="126" y="110">efectos</text>
+                    <line x1="125" y1="106" x2="108" y2="98" />
+                  </g>
+                </svg>
+                <div class="status"><span class="led"></span><span id="state">Alarma</span></div>
+                <div class="plan" aria-hidden="true">
+                  {Array.from({ length: 18 }, (_, i) => <i style={`--i:${i}`}></i>)}
+                </div>
+              </div>
+              <div class="controls">
+                <label for="turb">Turbidez</label>
+                <input id="turb" type="range" min="0" max="20" step="0.5" value="14" />
+                <output id="ntu" for="turb">14.0 UNT</output>
+              </div>
+            </figure>
+            <div class="dots" aria-hidden="true"><b></b><b></b><b></b><b></b></div>
           </div>
-          <div class="controls">
-            <label for="turb">Turbidez</label>
-            <input id="turb" type="range" min="0" max="20" step="0.5" value="2" />
-            <output id="ntu" for="turb">2.0 UNT</output>
-          </div>
-        </figure>
-        <p class="caption">
-          El sistema de monitoreo de turbidez de la I.E. Mariscal Cáceres, 2.º puesto en la Feria Eureka regional. Sobre
-          5 UNT enciende un LED rojo y una alarma.
-        </p>
-      </section>
-
-      <section class="s" style="--n:3">
-        <h2>Fases</h2>
-        <ol class="rows">
-          {fases.map((f) => (
-            <li>
-              <span class="k">{f.n}</span>
-              <div>
+          <ol class="steps">
+            {fases.map((f, i) => (
+              <li class="step" data-step={i + 1}>
+                <span class="k">Fase {f.n}</span>
                 <p class="t">{f.nombre}</p>
                 <p class="dim">{f.texto}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
+                <p class="dim small-t">{[
+                  "En el aula: el agua que llega a casa sale turbia. ¿Por qué pasa y qué le hace a la gente?",
+                  "En el aula: se arma el cronograma. Un proyecto dura 18 sesiones.",
+                  "En el aula: un sensor de turbidez conectado a una tarjeta programada con mBlock.",
+                  "En el aula: probá el prototipo. Sobre 5 UNT enciende el LED rojo y suena la alarma.",
+                ][i]}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+        <p class="caption">
+          Basado en el “Sistema tecnológico para el monitoreo y alerta de turbidez del agua” de estudiantes de la I.E.
+          Mariscal Cáceres, 2.º puesto en la etapa regional de la Feria Eureka.
+        </p>
       </section>
 
       <section class="s" style="--n:4">
@@ -245,6 +260,20 @@ const fuentes = [
       };
       r.addEventListener("input", paint);
       paint();
+
+      const jx = document.querySelector(".jx") as HTMLElement;
+      const presets: Record<string, number> = { "1": 14, "2": 14, "3": 14 };
+      const setStep = (n: string) => {
+        if (jx.dataset.step === n) return;
+        jx.dataset.step = n;
+        r.disabled = n !== "4";
+        if (presets[n] !== undefined) { r.value = String(presets[n]); paint(); }
+      };
+      r.disabled = true;
+      const io = new IntersectionObserver((es) => es.forEach((e) => {
+        if (e.isIntersecting) setStep((e.target as HTMLElement).dataset.step!);
+      }), { rootMargin: "-45% 0px -45% 0px" });
+      document.querySelectorAll(".step").forEach((el) => io.observe(el));
     </script>
   </body>
 </html>
@@ -336,4 +365,48 @@ const fuentes = [
     .s, #sed circle { animation: none; }
     #water, .led, #sed circle { transition: none; }
   }
+
+  /* recorrido */
+  .col { max-width: 880px; }
+  .col > :not(.journey) { max-width: 600px; width: 100%; margin-inline: auto; }
+  .jx { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+  .stage-wrap { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 72px); display: flex; flex-direction: column; gap: 14px; }
+  .stage { padding: 36px 0 24px; min-height: 280px; }
+  .glass { width: 180px; overflow: visible; }
+  .probe rect, .probe circle { fill: var(--gray-12); }
+  .probe line { stroke: var(--gray-12); stroke-width: 1.5; }
+  .probe { opacity: 0; translate: 0 -16px; transition: opacity 300ms var(--ease-out), translate 400ms var(--ease-out); }
+  .jx[data-step="3"] .probe, .jx[data-step="4"] .probe { opacity: 1; translate: 0 0; }
+  .notes text { font: 9px var(--mono); fill: var(--gray-11); }
+  .notes line { stroke: var(--gray-9); stroke-width: 0.75; stroke-dasharray: 2 2; }
+  .notes { opacity: 0; transition: opacity 250ms var(--ease-out); }
+  .jx[data-step="1"] .notes { opacity: 1; }
+  .plan { position: absolute; inset: auto 16px 14px 16px; display: grid; grid-template-columns: repeat(18, 1fr); gap: 3px; }
+  .plan i { height: 6px; border-radius: 2px; background: var(--gray-6); opacity: 0; transition: opacity 200ms var(--ease-out), background 200ms var(--ease-out); transition-delay: calc(var(--i) * 25ms); }
+  .jx[data-step="2"] .plan i { opacity: 1; background: var(--gray-12); }
+  .jx[data-step="3"] .plan i, .jx[data-step="4"] .plan i { opacity: 1; }
+  .jx[data-step="3"] .plan i:nth-child(-n+12), .jx[data-step="4"] .plan i { background: var(--gray-12); }
+  .status { opacity: 0; transition: opacity 250ms var(--ease-out); }
+  .jx[data-step="3"] .status, .jx[data-step="4"] .status { opacity: 1; }
+  .controls { transition: opacity 250ms var(--ease-out); }
+  .jx:not([data-step="4"]) .controls { opacity: 0.4; }
+  input[type="range"]:disabled { cursor: default; }
+  .dots { display: flex; gap: 6px; justify-content: center; }
+  .dots b { width: 6px; height: 6px; border-radius: 50%; background: var(--gray-6); transition: background 200ms ease, width 300ms var(--ease-out); }
+  .jx[data-step="1"] .dots b:nth-child(1), .jx[data-step="2"] .dots b:nth-child(2), .jx[data-step="3"] .dots b:nth-child(3), .jx[data-step="4"] .dots b:nth-child(4) { background: var(--gray-12); width: 18px; border-radius: 3px; }
+  .steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .step { min-height: 62vh; display: flex; flex-direction: column; justify-content: center; gap: 6px; opacity: 0.3; transition: opacity 300ms var(--ease-out); }
+  .step:last-child { min-height: 52vh; }
+  .jx[data-step="1"] .step[data-step="1"], .jx[data-step="2"] .step[data-step="2"], .jx[data-step="3"] .step[data-step="3"], .jx[data-step="4"] .step[data-step="4"] { opacity: 1; }
+  .step .k { font-family: var(--mono); font-size: 12px; color: var(--gray-9); text-transform: uppercase; letter-spacing: 0.06em; }
+  .step .t { font-size: 22px; font-weight: 500; letter-spacing: -0.02em; line-height: 1.25; }
+  .small-t { font-size: 13px; margin-top: 6px; }
+  @media (max-width: 760px) {
+    .jx { grid-template-columns: 1fr; gap: 0; }
+    .stage-wrap { top: env(safe-area-inset-top, 0px); z-index: 2; background: var(--gray-1); padding-block: 12px; }
+    .stage { min-height: 200px; padding: 20px 0 22px; }
+    .glass { width: 120px; }
+    .step { min-height: 55vh; }
+  }
+  @media (prefers-reduced-motion: reduce) { .probe, .notes, .plan i, .step, .dots b { transition: none; } }
 </style>
