@@ -195,13 +195,49 @@ const kit = [
               <figcaption>El papelógrafo original</figcaption>
             </figure>
           </div>
-          <div class="tree" data-part="consecuencias">
-            <div class="crown">
-              {arbol.consecuencias.map((c) => <button class="leaf" data-part="consecuencias">{c}</button>)}
-            </div>
-            <button class="trunk" data-part="problema"><small>Problema</small>{arbol.problema}</button>
-            <div class="roots">
-              {arbol.causas.map((c) => <button class="root" data-part="causas"><small>Causa</small>{c}</button>)}
+          <div class="ptree" data-part="consecuencias">
+            <div class="canvas">
+              <svg viewBox="0 0 600 600" aria-hidden="true">
+                <defs>
+                  <linearGradient id="bark" x1="0" x2="1">
+                    <stop offset="0" stop-color="#6b4226" /><stop offset="0.5" stop-color="#94603a" /><stop offset="1" stop-color="#6b4226" />
+                  </linearGradient>
+                </defs>
+                <g class="g-roots" data-part="causas">
+                  <path class="draw" d="M300 420 C 300 470, 250 480, 200 530" />
+                  <path class="draw" d="M300 420 C 305 480, 330 500, 400 540" />
+                  <path class="draw" d="M300 420 C 298 470, 300 510, 296 570" />
+                  <path class="draw thin" d="M262 470 C 240 480, 220 470, 180 480" />
+                  <path class="draw thin" d="M335 480 C 360 485, 390 480, 430 490" />
+                </g>
+                <line class="ground" x1="110" y1="420" x2="490" y2="420" />
+                <g class="g-trunk" data-part="problema">
+                  <path d="M268 422 C 276 360, 280 300, 278 250 L 322 250 C 320 300, 324 360, 332 422 Z" fill="url(#bark)" />
+                  <path class="branch" d="M286 262 C 260 230, 220 210, 170 190" />
+                  <path class="branch" d="M314 262 C 340 230, 380 210, 430 190" />
+                  <path class="branch" d="M300 252 C 300 210, 298 170, 300 120" />
+                  <path class="branch thin" d="M296 205 C 270 180, 250 150, 230 120" />
+                  <path class="branch thin" d="M304 200 C 330 175, 350 150, 372 122" />
+                </g>
+                <g class="g-crown" data-part="consecuencias">
+                  {[
+                    [300, 95, 92], [195, 150, 86], [405, 150, 86], [130, 230, 70], [470, 230, 70],
+                    [250, 215, 90], [350, 215, 90], [300, 160, 80], [215, 85, 60], [385, 85, 60],
+                  ].map(([cx, cy, r], i) => (
+                    <circle class={`leafc l${i % 3}`} cx={cx} cy={cy} r={r} style={`--i:${i}`} />
+                  ))}
+                </g>
+              </svg>
+              {arbol.consecuencias.map((c, i) => (
+                <button class="tag pink" data-part="consecuencias" style={`--x:${[50, 21, 80, 31, 69][i]}%; --y:${[8, 21, 17, 36, 41][i]}%; --r:${[-2, 3, -3, 2, -1.5][i]}deg; --i:${i}`}>{c}</button>
+              ))}
+              <button class="tag lilac big" data-part="problema" style="--x:50%; --y:57%; --r:-1deg; --i:5"><small>Problema</small>{arbol.problema}</button>
+              {arbol.causas.map((c) => (
+                <button class="tag lilac" data-part="causas" style="--x:50%; --y:88%; --r:1.5deg; --i:6"><small>Causa</small>{c}</button>
+              ))}
+              <span class="label l-cons" aria-hidden="true">consecuencias</span>
+              <span class="label l-prob" aria-hidden="true">problema</span>
+              <span class="label l-caus" aria-hidden="true">causas</span>
             </div>
             <p class="legend" aria-live="polite" id="legend">Consecuencias: lo que el problema provoca en la comunidad.</p>
           </div>
@@ -291,19 +327,29 @@ const kit = [
     </footer>
 
     <script>
-      const tree = document.querySelector(".tree") as HTMLElement;
+      const tree = document.querySelector(".ptree") as HTMLElement;
       const legend = document.getElementById("legend")!;
       const text: Record<string, string> = {
         consecuencias: "Consecuencias: lo que el problema provoca en la comunidad.",
         problema: "Problema: lo que el grupo decide investigar.",
         causas: "Causas: por qué ocurre el problema.",
       };
-      tree.querySelectorAll("button").forEach((b) => {
-        const go = () => { tree.dataset.part = b.dataset.part!; legend.textContent = text[b.dataset.part!]; };
-        b.addEventListener("click", go);
-        b.addEventListener("mouseenter", go);
-        b.addEventListener("focus", go);
+      const set = (part: string) => { tree.dataset.part = part; legend.textContent = text[part]; };
+      tree.querySelectorAll<HTMLElement>("[data-part]").forEach((el) => {
+        if (el === tree) return;
+        el.addEventListener("pointerenter", () => set(el.dataset.part!));
+        el.addEventListener("click", () => set(el.dataset.part!));
+        el.addEventListener("focus", () => set(el.dataset.part!));
       });
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        tree.classList.add("will-grow");
+        const io = new IntersectionObserver(([e]) => {
+          if (e.isIntersecting) { tree.classList.add("grow"); io.disconnect(); }
+        }, { threshold: 0.35 });
+        io.observe(tree);
+        setTimeout(() => tree.classList.add("settled"), 0);
+        tree.addEventListener("transitionend", () => tree.classList.add("settled"), { once: false });
+      }
     </script>
   </body>
 </html>
@@ -398,19 +444,6 @@ const kit = [
   .orig { margin: 28px 0 0; display: flex; align-items: center; gap: 14px; }
   .orig img { width: 110px; border-radius: 12px; transform: rotate(-3deg); box-shadow: 0 10px 24px rgb(0 0 0 / 0.35); }
   .orig figcaption { font-family: var(--hand); font-size: 1.3rem; color: #c9d6f0; }
-  .tree { display: flex; flex-direction: column; align-items: center; gap: 0; position: relative; min-width: 0; }
-  .tree button { font: inherit; cursor: pointer; border: 0; color: var(--ink); transition: transform 160ms var(--ease-out), opacity 200ms ease, background 200ms ease; }
-  .tree button:active { transform: scale(0.97); }
-  .crown { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 32px 26px; background: #2ea85a; border-radius: 48% 52% 44% 56% / 58% 56% 44% 42%; max-width: 560px; }
-  .leaf { background: #ffe1ea; padding: 8px 14px; border-radius: 10px; font-size: 0.92rem; font-weight: 600; text-align: left; }
-  .trunk { margin-top: -6px; width: 200px; min-height: 120px; background: #8a5a35; color: #fff !important; border-radius: 0 0 14px 14px; padding: 18px 14px; display: flex; flex-direction: column; justify-content: center; font-weight: 700; }
-  .roots { display: flex; justify-content: center; padding-top: 10px; border-top: 6px solid #6e4628; width: 320px; border-radius: 0 0 40% 40%; }
-  .root, .trunk { font-size: 0.95rem; }
-  .root { background: #e9dcff; padding: 10px 14px; border-radius: 10px; font-weight: 600; max-width: 280px; }
-  .tree small { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.75; margin-bottom: 4px; }
-  .tree[data-part="consecuencias"] .trunk, .tree[data-part="consecuencias"] .root,
-  .tree[data-part="problema"] .leaf, .tree[data-part="problema"] .root,
-  .tree[data-part="causas"] .leaf, .tree[data-part="causas"] .trunk { opacity: 0.4; }
   .legend { margin-top: 22px; font-family: var(--hand); font-size: 1.5rem; color: #ffd27a; text-align: center; min-height: 2.2em; }
 
   .kit { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: center; }
@@ -462,4 +495,52 @@ const kit = [
     .roots { width: 100%; }
   }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+
+  /* árbol de problemas */
+  .ptree { min-width: 0; }
+  .canvas { position: relative; width: 100%; max-width: 620px; aspect-ratio: 1; margin: 0 auto; }
+  .canvas svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .g-roots path, .branch { fill: none; stroke: #7a4c2c; stroke-linecap: round; stroke-width: 14; }
+  .g-roots path.thin, .branch.thin { stroke-width: 7; }
+  .branch { stroke: #84532f; stroke-width: 12; }
+  .ground { stroke: #3b5aa8; stroke-width: 2; stroke-dasharray: 3 7; stroke-linecap: round; }
+  .leafc { transform-box: fill-box; transform-origin: center; }
+  .l0 { fill: #23964b; } .l1 { fill: #2fae5b; } .l2 { fill: #1f8443; }
+  .canvas svg g { transition: opacity 250ms ease, filter 250ms ease; }
+  .tag {
+    position: absolute; left: var(--x); top: var(--y); translate: -50% -50%; rotate: var(--r);
+    max-width: 38%; padding: 10px 14px 11px; border: 0; border-radius: 4px; cursor: pointer;
+    font: 600 clamp(11px, 1.45vw, 15px)/1.3 var(--body); color: #2a1a3a; text-align: center;
+    box-shadow: 0 1px 0 rgb(0 0 0 / 0.08), 0 10px 18px -10px rgb(0 0 0 / 0.55);
+    transition: rotate 200ms var(--ease-out), scale 200ms var(--ease-out), opacity 250ms ease, translate 200ms var(--ease-out);
+  }
+  .tag::before { content: ""; position: absolute; top: -5px; left: 50%; width: 10px; height: 10px; translate: -50% 0; border-radius: 50%; background: #e63946; box-shadow: inset -2px -2px 0 rgb(0 0 0 / 0.2); }
+  .tag.pink { background: #ffd6e2; }
+  .tag.lilac { background: #e6dbff; }
+  .tag.big { max-width: 30%; font-size: clamp(12px, 1.6vw, 16px); }
+  .tag small { display: block; font: 700 10px/1 var(--body); letter-spacing: 0.1em; text-transform: uppercase; color: #6d4fb3; margin-bottom: 5px; }
+  .tag:active { scale: 0.97; }
+  @media (hover: hover) { .tag:hover { rotate: 0deg; scale: 1.04; } }
+  .label { position: absolute; font-family: var(--hand); font-size: clamp(16px, 2.4vw, 26px); color: #ffd27a; pointer-events: none; transition: opacity 250ms ease; }
+  .l-cons { left: -2%; top: 4%; rotate: -8deg; }
+  .l-prob { right: 2%; top: 50%; rotate: 6deg; }
+  .l-caus { left: 2%; top: 80%; rotate: -6deg; }
+  .ptree[data-part="consecuencias"] :is(.g-trunk, .g-roots), .ptree[data-part="problema"] :is(.g-crown, .g-roots), .ptree[data-part="causas"] :is(.g-crown, .g-trunk) { opacity: 0.28; filter: saturate(0.4); }
+  .ptree[data-part="consecuencias"] .tag:not([data-part="consecuencias"]), .ptree[data-part="problema"] .tag:not([data-part="problema"]), .ptree[data-part="causas"] .tag:not([data-part="causas"]) { opacity: 0.4; }
+  .ptree[data-part="consecuencias"] .label:not(.l-cons), .ptree[data-part="problema"] .label:not(.l-prob), .ptree[data-part="causas"] .label:not(.l-caus) { opacity: 0.25; }
+  .legend { min-height: 2.4em; }
+
+  /* crecimiento, una sola vez */
+  .will-grow .draw { stroke-dasharray: 400; stroke-dashoffset: 400; }
+  .will-grow .g-trunk { transform-box: fill-box; transform-origin: 50% 100%; scale: 1 0.2; opacity: 0; }
+  .will-grow .leafc { scale: 0.6; opacity: 0; }
+  .will-grow .tag { opacity: 0; translate: -50% -30%; }
+  .will-grow .label { opacity: 0; }
+  .grow .draw { stroke-dashoffset: 0; transition: stroke-dashoffset 900ms var(--ease-out); }
+  .grow .g-trunk { scale: 1 1; opacity: 1; transition: scale 700ms var(--ease-out) 250ms, opacity 300ms ease 250ms; }
+  .grow .leafc { scale: 1; opacity: 1; transition: scale 600ms cubic-bezier(0.34, 1.4, 0.64, 1), opacity 300ms ease; transition-delay: calc(650ms + var(--i) * 45ms); }
+  .grow .tag { opacity: 1; translate: -50% -50%; transition: opacity 300ms ease, translate 450ms var(--ease-out), rotate 200ms var(--ease-out), scale 200ms var(--ease-out); transition-delay: calc(1050ms + var(--i) * 70ms), calc(1050ms + var(--i) * 70ms), 0ms, 0ms; }
+  .grow .label { opacity: 1; transition: opacity 400ms ease 1500ms; }
+  .grow.settled .tag { transition-delay: 0ms; }
+  @media (max-width: 560px) { .tag { max-width: 44%; padding: 7px 9px 8px; } .tag.big { max-width: 40%; } .label { display: none; } }
 </style>
