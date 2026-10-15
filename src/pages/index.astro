@@ -95,15 +95,16 @@ const fuentes = [
   </head>
   <body>
     <div class="weave" aria-hidden="true"></div>
-    <header class="wrap top">
+    <header class="bar"><div class="wrap top">
       <a class="logo" href="#">IBPT-STEM</a>
-      <nav>
+      <nav id="nav">
+        <span class="ind" aria-hidden="true"></span>
         <a href="#modelo">Modelo</a>
         <a href="#fases">Fases</a>
         <a href="#proyectos">Proyectos</a>
         <a href="#bibliografia">Bibliografía</a>
       </nav>
-    </header>
+    </div></header>
 
     <main>
       <section class="wrap hero">
@@ -125,7 +126,7 @@ const fuentes = [
       </section>
 
       <section id="modelo" class="wrap quote-sec">
-        <blockquote>
+        <blockquote class="quote">
           <p>“Debemos conocer muy bien el problema que vamos a investigar, sus causas, sus consecuencias.”</p>
           <cite>Amelia Pacheco Carhuaricra, docente de 5.º de secundaria en la I.E. Mariscal Cáceres, explicando la primera fase a su clase</cite>
         </blockquote>
@@ -136,7 +137,7 @@ const fuentes = [
           <h2>Las cuatro fases</h2>
           <p>El modelo une el método de resolución de problemas con recursos tecnológicos al alcance de un colegio de provincia.</p>
         </div>
-        <ol class="fases">
+        <ol class="fases reveal">
           {fases.map((f) => (
             <li>
               <span class="num">{f.n}</span>
@@ -160,6 +161,7 @@ const fuentes = [
         <figure class="lab" data-alarm="off">
           <svg viewBox="0 0 120 150" class="glass" role="img" aria-label="Vaso con agua cuya turbidez cambia con el control">
             <path id="water" d="M23 40 L97 40 L91.5 136 L28.5 136 Z" fill="#9cc9df"/>
+            <g id="sed"></g>
             <path d="M18 14 L102 14 L92 140 L28 140 Z" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
           </svg>
           <div class="panel">
@@ -223,23 +225,83 @@ si no
     </footer>
 
     <script>
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      document.documentElement.classList.add("js");
+
+      // laboratorio
       const r = document.getElementById("turb") as HTMLInputElement;
       const out = document.getElementById("ntu")!;
       const water = document.getElementById("water")!;
+      const sed = document.getElementById("sed")!;
       const state = document.getElementById("state")!;
       const lab = document.querySelector(".lab") as HTMLElement;
+      const NS = "http://www.w3.org/2000/svg";
+      const dots = Array.from({ length: 40 }, (_, i) => {
+        const c = document.createElementNS(NS, "circle");
+        const h = (n: number) => { const x = Math.sin(n * 12.9898) * 43758.5453; return x - Math.floor(x); };
+        const y = 48 + h(i + 1) * 84;
+        const half = 37 - ((y - 40) / 96) * 5.5;
+        c.setAttribute("cx", String(60 + (h(i + 101) - 0.5) * 2 * (half - 4)));
+        c.setAttribute("cy", String(y));
+        c.setAttribute("r", String(0.8 + (i % 3) * 0.5));
+        c.style.setProperty("--d", `${(i % 7) * -0.9}s`);
+        sed.appendChild(c);
+        return c;
+      });
       const clear = [156, 201, 223], mud = [140, 112, 74];
       const paint = () => {
         const v = Number(r.value);
         const t = v / 20;
         water.setAttribute("fill", `rgb(${clear.map((x, i) => Math.round(x + (mud[i] - x) * t)).join(",")})`);
-        out.textContent = `${v.toLocaleString("es-PE")} UNT`;
+        const visible = Math.round(t * dots.length);
+        dots.forEach((d, i) => d.classList.toggle("on", i < visible));
+        out.textContent = `${v.toLocaleString("es-PE", { minimumFractionDigits: 1 })} UNT`;
         const alarm = v > 5;
-        lab.dataset.alarm = alarm ? "on" : "off";
-        state.textContent = alarm ? "Supera el límite. LED rojo y alarma." : "Apta para consumo. LED verde encendido.";
+        if (lab.dataset.alarm !== (alarm ? "on" : "off")) {
+          lab.dataset.alarm = alarm ? "on" : "off";
+          state.textContent = alarm ? "Supera el límite. LED rojo y alarma." : "Apta para consumo. LED verde encendido.";
+        }
+        r.style.setProperty("--p", `${t * 100}%`);
       };
       r.addEventListener("input", paint);
       paint();
+
+      // reveal de fases, solo si hay JS y movimiento permitido
+      if (!reduce) {
+        const io = new IntersectionObserver((es) => es.forEach((e) => {
+          if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+        }), { threshold: 0.2 });
+        document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
+      } else {
+        document.querySelectorAll(".reveal").forEach((el) => el.classList.add("in"));
+      }
+
+      // indicador del nav
+      const nav = document.getElementById("nav")!;
+      const ind = nav.querySelector(".ind") as HTMLElement;
+      const links = Array.from(nav.querySelectorAll("a"));
+      const move = (a: HTMLElement | null) => {
+        if (!a) { ind.style.opacity = "0"; return; }
+        ind.style.opacity = "1";
+        ind.style.width = `${a.offsetWidth}px`;
+        ind.style.transform = `translateX(${a.offsetLeft}px)`;
+        links.forEach((l) => l.toggleAttribute("aria-current", l === a));
+      };
+      const secs = links.map((l) => document.querySelector(l.getAttribute("href")!)!);
+      const spy = new IntersectionObserver(() => {
+        const y = innerHeight * 0.35;
+        let cur: HTMLElement | null = null;
+        secs.forEach((sec, i) => { if (sec.getBoundingClientRect().top < y) cur = links[i]; });
+        move(cur);
+      }, { threshold: [0, 0.25, 0.5, 0.75, 1] });
+      secs.forEach((sec) => spy.observe(sec));
+      addEventListener("scroll", () => {
+        document.body.classList.toggle("scrolled", scrollY > 8);
+        const y = innerHeight * 0.35;
+        let cur: HTMLElement | null = null;
+        secs.forEach((sec, i) => { if (sec.getBoundingClientRect().top < y) cur = links[i]; });
+        move(cur);
+      }, { passive: true });
     </script>
   </body>
 </html>
@@ -347,4 +409,45 @@ si no
   }
   @media (max-width: 520px) { .fases { grid-template-columns: 1fr; } }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } #water, .led { transition: none; } }
+
+  /* movimiento */
+  :root { --ease-out: cubic-bezier(0.23, 1, 0.32, 1); --ease-io: cubic-bezier(0.77, 0, 0.175, 1); }
+  .bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(10px) saturate(1.4); -webkit-backdrop-filter: blur(10px) saturate(1.4); border-bottom: 1px solid transparent; transition: border-color 200ms var(--ease-out); }
+  .scrolled .bar { border-bottom-color: var(--line); }
+  .top nav { position: relative; }
+  .top nav a[aria-current] { color: var(--fg); }
+  .ind { position: absolute; left: 0; bottom: -6px; height: 2px; width: 0; background: var(--accent); opacity: 0; transition: transform 320ms var(--ease-out), width 320ms var(--ease-out), opacity 200ms; pointer-events: none; }
+
+  .quote p { animation: unveil 900ms var(--ease-out) 120ms both; }
+  @keyframes unveil { from { clip-path: inset(0 0 100% 0); translate: 0 12px; } to { clip-path: inset(0 0 -10% 0); translate: 0 0; } }
+
+  .js .reveal li { opacity: 0; translate: 0 8px; filter: blur(3px); transition: opacity 500ms var(--ease-out), translate 500ms var(--ease-out), filter 500ms var(--ease-out); transition-delay: calc(var(--i, 0) * 60ms); }
+  .js .reveal.in li { opacity: 1; translate: 0 0; filter: none; }
+  .fases li:nth-child(2) { --i: 1; } .fases li:nth-child(3) { --i: 2; } .fases li:nth-child(4) { --i: 3; }
+
+  #water { transition: fill 400ms var(--ease-out); }
+  #sed circle { fill: #5b4630; opacity: 0; transition: opacity 300ms var(--ease-out); animation: drift 6s ease-in-out var(--d) infinite alternate; }
+  #sed circle.on { opacity: 0.55; }
+  @keyframes drift { from { translate: -1.5px -2px; } to { translate: 1.5px 2px; } }
+  .led { transition: background 150ms var(--ease-out), box-shadow 150ms var(--ease-out); }
+  .lab[data-alarm="on"] .led { box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent); }
+  .state { transition: color 150ms var(--ease-out); }
+
+  .panel input[type="range"] { appearance: none; -webkit-appearance: none; height: 22px; background: transparent; cursor: pointer; }
+  .panel input[type="range"]::-webkit-slider-runnable-track { height: 3px; border-radius: 3px; background: linear-gradient(to right, var(--fg) var(--p, 10%), var(--line) var(--p, 10%)); }
+  .panel input[type="range"]::-moz-range-track { height: 3px; border-radius: 3px; background: linear-gradient(to right, var(--fg) var(--p, 10%), var(--line) var(--p, 10%)); }
+  .panel input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; margin-top: -7.5px; border-radius: 50%; background: var(--bg); border: 2px solid var(--fg); transition: scale 150ms var(--ease-out); }
+  .panel input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: var(--bg); border: 2px solid var(--fg); }
+  .panel input[type="range"]:active::-webkit-slider-thumb { scale: 1.15; }
+
+  .fuentes a, .lead a { text-decoration: none; background: linear-gradient(var(--accent), var(--accent)) 0 100% / 0 1.5px no-repeat; transition: background-size 250ms var(--ease-out); }
+  .fuentes a { background-size: 100% 1px; background-image: linear-gradient(var(--line), var(--line)); }
+  @media (hover: hover) and (pointer: fine) {
+    .fuentes a:hover { background-image: linear-gradient(var(--accent), var(--accent)); color: var(--fg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .quote p, #sed circle { animation: none; }
+    .ind, .js .reveal li, #water, .led { transition: none; }
+  }
 </style>
